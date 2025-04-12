@@ -6,7 +6,7 @@ interface RequestWithParams extends Request {
   }
 }
 
-const isID = (req: RequestWithParams, res: Response, next: NextFunction) => {
+const isID = (req: RequestWithParams, res: Response, next: NextFunction): void | Response => {
   const { id } = req.params
 
   if (isNaN(Number(id))) {
