@@ -1,6 +1,13 @@
-import * as userService from '../services/userService.js'
+import { Request, Response, NextFunction } from 'express'
+import * as userService from '../services/userService'
 
-export const getAllUsers = async (req, res, next) => {
+interface RequestWithParams extends Request {
+  params: {
+    id: string
+  }
+}
+
+export const getAllUsers = async (_req: Request, res: Response, next: NextFunction) => {
   try {
     const users = await userService.getAllUsers()
     res.json({ users, count: users.length })
@@ -9,7 +16,7 @@ export const getAllUsers = async (req, res, next) => {
   }
 }
 
-export const getUserCount = async (req, res, next) => {
+export const getUserCount = async (_req: Request, res: Response, next: NextFunction) => {
   try {
     const count = await userService.getUserCount()
     res.json({ count })
@@ -18,7 +25,7 @@ export const getUserCount = async (req, res, next) => {
   }
 }
 
-export const getUserById = async (req, res, next) => {
+export const getUserById = async (req: RequestWithParams, res: Response, next: NextFunction) => {
   const { id } = req.params
 
   try {
