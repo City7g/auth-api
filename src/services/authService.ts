@@ -1,7 +1,8 @@
 import bcrypt from 'bcryptjs'
 import jwt from 'jsonwebtoken'
-import { PrismaClient, User } from '@prisma/client'
+import { User } from '@prisma/client'
 import { generateTokens } from '../utils/tokenUtils'
+import prisma from '../lib/prisma'
 
 interface RegisterData {
   name: string
@@ -17,8 +18,6 @@ interface Tokens {
 interface LoginResponse extends Tokens {
   user: User
 }
-
-const prisma = new PrismaClient()
 
 export const registerUser = async ({ name, age, password }: RegisterData): Promise<User> => {
   const hashedPassword = await bcrypt.hash(password, 10)
